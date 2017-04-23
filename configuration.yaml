@@ -1,0 +1,23 @@
+max_cpu : 4
+
+refresh_interval: 20 #seconds
+
+server :
+    port: 8080
+
+cameras :
+  - name: "Camera 1"
+    url: "http://195.67.26.73/mjpg/video.mjpg"
+    path: "cam1"
+
+  - name: "Camera 2"
+    url: "http://96.10.1.168/mjpg/1/video.mjpg"
+    path: "cam2"
+
+  - name:
+    url: "http://plazacam.studentaffairs.duke.edu/mjpg/video.mjpg"
+    path: "cam3"
+
+#  - name: "Kamera 4"
+#    url: "http://plaza232323cam.studentaffairs.duke.edu/mjpg/video.mjpg"
+#    path: "cam4"
