@@ -2,6 +2,7 @@ package camera
 
 import (
 	"log"
+	"github.com/twinj/uuid"
 )
 
 type cameraRepository struct {
@@ -13,6 +14,7 @@ func InitRepository(cameras []Camera) *cameraRepository {
 	cameraMap := make(map[string]Camera)
 	cameraModle := cameraRepository{cameraMap}
 	for _, camera := range cameras {
+		camera.Id = uuid.NewV4().String()
 		cameraModle.data[camera.Id] = camera
 	}
 	return &cameraModle
@@ -42,7 +44,9 @@ func (repository *cameraRepository) FindCameraByPath(path string) Camera {
 	return camera
 }
 
-
-func (repository *cameraRepository) Save(camera Camera){
+func (repository *cameraRepository) Save(camera Camera) {
+	if camera.Id == "" {
+		camera.Id = uuid.NewV4().String()
+	}
 	repository.data[camera.Id] = camera
 }

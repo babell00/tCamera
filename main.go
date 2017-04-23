@@ -5,7 +5,6 @@ import (
 	"runtime"
 	"log"
 	"github.com/babell00/toc_camera/camera"
-	"fmt"
 	"github.com/babell00/toc_camera/network"
 )
 
@@ -29,12 +28,6 @@ func setup() {
 	cameras := camera.ConvertConfigCameraToCamera(config.Cameras)
 
 	cameraService := camera.InitService(cameras)
-	fmt.Println(cameraService.GetByPath("cam1"))
-
-	c := cameraService.GetByPath("cam1")
-	c.Name = "dupa"
-	cameraService.Save(c)
-	fmt.Println(cameraService.GetByPath("cam1"))
 
 	cameraService.SetUpdateFunction(config.RefreshInterval)
 
