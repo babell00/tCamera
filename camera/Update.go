@@ -20,15 +20,20 @@ func readJpeg(url string) (image.Image, error) {
 	return img, nil
 }
 
-func (service *CameraService) SetUpdateFunction(updateInterval int) {
+func SetUpdateFunction(updateInterval int, service *CameraService) {
 	ticker := time.NewTicker(time.Second * time.Duration(updateInterval))
 	go func() {
 		for range ticker.C {
-			for _, camera := range service.GetAll() {
-				updateCamera(camera, service)
-			}
+			cameras := service.GetAll()
+			UpdateCameras(cameras, service)
 		}
 	}()
+}
+
+func UpdateCameras(cameras []Camera, service *CameraService){
+	for _, camera := range cameras {
+		 go updateCamera(camera, service)
+	}
 }
 
 func updateCamera(camera Camera, service *CameraService) {

@@ -6,6 +6,7 @@ import (
 	"log"
 	"github.com/babell00/toc_camera/camera"
 	"github.com/babell00/toc_camera/network"
+	"os"
 )
 
 func main() {
@@ -18,6 +19,9 @@ func printInfo(config configuration.Config) {
 }
 
 func setup() {
+
+	//setLogger()
+
 	log.Println("Setting up application")
 
 	config := configuration.ReadConfigurationFromYaml()
@@ -29,9 +33,19 @@ func setup() {
 
 	cameraService := camera.InitService(cameras)
 
-	cameraService.SetUpdateFunction(config.RefreshInterval)
+	cameras = cameraService.GetAll()
+	camera.UpdateCameras(cameras, cameraService)
+	camera.SetUpdateFunction(config.RefreshInterval, cameraService)
 
 	printInfo(config)
 
 	network.StartServer(config.Server.Port, cameraService)
+}
+
+func setLogger() {
+	f, err := os.OpenFile("camera.log", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		log.Printf("Error opening file: %v", err)
+	}
+	log.SetOutput(f)
 }
