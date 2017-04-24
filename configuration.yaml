@@ -1,6 +1,6 @@
 max_cpu : 4
 
-refresh_interval: 20 #seconds
+refresh_interval: 300 #seconds
 
 default_error_image: "images/no-signal.jpg"
 
