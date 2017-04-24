@@ -10,7 +10,7 @@ type cameraRepository struct {
 }
 
 func InitRepository(cameras []Camera) *cameraRepository {
-	log.Println("Init Camera Model")
+	log.Println("Init Camera Repository")
 	cameraMap := make(map[string]Camera)
 	cameraModle := cameraRepository{cameraMap}
 	for _, camera := range cameras {
@@ -50,3 +50,8 @@ func (repository *cameraRepository) Save(camera Camera) {
 	}
 	repository.data[camera.Id] = camera
 }
+
+func (repository *cameraRepository) SaveById(id string, camera Camera) {
+	repository.data[id] = camera
+}
+

@@ -11,10 +11,12 @@ import (
 const FILE_PATH string = "configuration.yaml"
 const DEFAULT_PORT_NUMBER int = 8080
 const DEFAULT_REFRESH_INTERVAL int = 10
+const DEFAULT_ERROR_IMAGE string = "image/no-signal.jpg"
 
 type Config struct {
 	MaxCpu          int `yaml:"max_cpu"`
 	RefreshInterval int `yaml:"refresh_interval"`
+	DefaultErrorImage string `yaml:"default_error_image"`
 	Server          Server `yaml:"server"`
 	Cameras         []Camera `yaml:"cameras"`
 }
@@ -23,6 +25,7 @@ type Camera struct {
 	Name string `yaml:"name"`
 	Url  string `yaml:"url"`
 	Path string `yaml:"path"`
+	ErrorImage string `yaml:"error_image"`
 }
 
 type Server struct {
@@ -41,17 +44,11 @@ func ReadConfigurationFromYaml() Config {
 func validate(config *Config) {
 	log.Println("Configuration validation")
 	validateCpuField(config)
-	validateServerPortField(config)
 	validateRefreshIntervalField(config)
+	validateServerPortField(config)
+	validateDefaultErrorImage(config)
 	validateCameraNames(config)
-}
-
-func validateCameraNames(config *Config) {
-	for k := range config.Cameras {
-		if config.Cameras[k].Name == "" {
-			config.Cameras[k].Name = marvel.SelectRandomName()
-		}
-	}
+	validateCameraErrorImage(config)
 }
 
 func validateCpuField(config *Config) {
@@ -62,6 +59,12 @@ func validateCpuField(config *Config) {
 	case config.MaxCpu > runtime.NumCPU():
 		config.MaxCpu = runtime.NumCPU()
 		break
+	}
+}
+
+func validateRefreshIntervalField(config *Config) {
+	if config.RefreshInterval == 0 {
+		config.RefreshInterval = DEFAULT_REFRESH_INTERVAL
 	}
 }
 
@@ -79,9 +82,26 @@ func validateServerPortField(config *Config) {
 	}
 }
 
-func validateRefreshIntervalField(config *Config) {
-	if config.RefreshInterval == 0 {
-		config.RefreshInterval = DEFAULT_REFRESH_INTERVAL
+
+func validateCameraNames(config *Config) {
+	for k := range config.Cameras {
+		if config.Cameras[k].Name == "" {
+			config.Cameras[k].Name = marvel.SelectRandomName()
+		}
+	}
+}
+
+func validateDefaultErrorImage(config *Config) {
+	if config.DefaultErrorImage == "" {
+		config.DefaultErrorImage = DEFAULT_ERROR_IMAGE
+	}
+}
+
+func validateCameraErrorImage(config *Config) {
+	for k := range config.Cameras {
+		if config.Cameras[k].ErrorImage == "" {
+			config.Cameras[k].ErrorImage = DEFAULT_ERROR_IMAGE
+		}
 	}
 }
 

@@ -25,7 +25,7 @@ func setup() {
 	log.Printf("Max number of CPUs: %v", config.MaxCpu)
 	runtime.GOMAXPROCS(config.MaxCpu)
 
-	cameras := camera.ConvertConfigCameraToCamera(config.Cameras)
+	cameras := camera.ConvertConfigCameraToCamera(config)
 
 	cameraService := camera.InitService(cameras)
 
