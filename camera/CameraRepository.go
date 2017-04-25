@@ -8,27 +8,32 @@ import (
 
 type cameraRepository struct {
 	data map[string]Camera
-	mux *sync.Mutex
+	mux  *sync.Mutex
 }
 
 func InitRepository(cameras []Camera) *cameraRepository {
 	log.Println("Init Camera Repository")
 	mutex := &sync.Mutex{}
-	cameraMap := make(map[string]Camera)
-	cameraModle := cameraRepository{cameraMap, mutex}
+	data := make(map[string]Camera)
+	cameraRepository := cameraRepository{data, mutex}
+	cameraRepository.mux.Lock()
 	for _, camera := range cameras {
 		camera.Id = uuid.NewV4().String()
-		cameraModle.data[camera.Id] = camera
+		cameraRepository.data[camera.Id] = camera
 	}
-	return &cameraModle
+	cameraRepository.mux.Unlock()
+	return &cameraRepository
 
 }
 
 func (repository *cameraRepository) FindAll() []Camera {
 	cameraList := make([]Camera, 0, len(repository.data))
+	repository.mux.Lock()
 	for _, value := range repository.data {
+
 		cameraList = append(cameraList, value)
 	}
+	repository.mux.Unlock()
 	return cameraList
 }
 
