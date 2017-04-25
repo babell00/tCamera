@@ -8,8 +8,8 @@ server :
     port: 8080
 
 cameras :
-  - name: "16 - North West Eight Antiques"
-    url: "http://192.168.0.107:8080/video3.mjpg"
+  - name: "Carpark"
+    url: "http://192.168.1.112:8080/video3.mjpg"
     path: "north_west_eight_antiques"
     error_image: "images/no-signal-toc.jpg"
 
