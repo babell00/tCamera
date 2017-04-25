@@ -5,16 +5,22 @@ import (
 	"image"
 	"os"
 	"log"
+	"fmt"
 )
 
 func ConvertConfigCameraToCamera(config configuration.Config) []Camera {
 	var cameras []Camera
 	for _, v := range config.Cameras {
 		img := openImage(v.ErrorImage, config)
-		c := Camera{Name: v.Name, Url: v.Url, Path: v.Path, Image: img}
+		publicUrl := buildPublicUrl(config.PublicAddress, v.Path)
+		c := Camera{Name: v.Name, Url: v.Url, Path: v.Path, PublicUrl: publicUrl, Image: img}
 		cameras = append(cameras, c)
 	}
 	return cameras
+}
+
+func buildPublicUrl(publicUrl string,path string) string {
+	return fmt.Sprintf("http://%v/%v", publicUrl, path)
 }
 
 func openImage(fileName string, config configuration.Config) image.Image {

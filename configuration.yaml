@@ -4,6 +4,8 @@ refresh_interval: 300 #seconds
 
 default_error_image: "images/no-signal.jpg"
 
+public_address: "217.35.86.6"
+
 server :
     port: 8080
 
@@ -93,7 +95,7 @@ cameras :
     path: "hallway"
     error_image: "images/no-signal-toc.jpg"
 
-  - name: "Camera 1"
+  - name: "TEST TEST"
     url: "http://96.10.1.168/mjpg/1/video.mjpg"
-    path: "cam1"
+    path: "test"
     error_image: "images/no-signal-toc.jpg"

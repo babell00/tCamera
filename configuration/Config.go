@@ -12,19 +12,21 @@ const FILE_PATH string = "configuration.yaml"
 const DEFAULT_PORT_NUMBER int = 8080
 const DEFAULT_REFRESH_INTERVAL int = 10
 const DEFAULT_ERROR_IMAGE string = "image/no-signal.jpg"
+const DEFAULT_PUBLIC_ADDRESS = "localhost"
 
 type Config struct {
-	MaxCpu          int `yaml:"max_cpu"`
-	RefreshInterval int `yaml:"refresh_interval"`
+	MaxCpu            int `yaml:"max_cpu"`
+	RefreshInterval   int `yaml:"refresh_interval"`
+	PublicAddress     string `yaml:"public_address"`
 	DefaultErrorImage string `yaml:"default_error_image"`
-	Server          Server `yaml:"server"`
-	Cameras         []Camera `yaml:"cameras"`
+	Server            Server `yaml:"server"`
+	Cameras           []Camera `yaml:"cameras"`
 }
 
 type Camera struct {
-	Name string `yaml:"name"`
-	Url  string `yaml:"url"`
-	Path string `yaml:"path"`
+	Name       string `yaml:"name"`
+	Url        string `yaml:"url"`
+	Path       string `yaml:"path"`
 	ErrorImage string `yaml:"error_image"`
 }
 
@@ -45,6 +47,7 @@ func validate(config *Config) {
 	log.Println("Configuration validation")
 	validateCpuField(config)
 	validateRefreshIntervalField(config)
+	validatePublicAddress(config)
 	validateServerPortField(config)
 	validateDefaultErrorImage(config)
 	validateCameraNames(config)
@@ -68,6 +71,12 @@ func validateRefreshIntervalField(config *Config) {
 	}
 }
 
+func validatePublicAddress(config *Config){
+	if config.PublicAddress == "" {
+		config.PublicAddress = DEFAULT_PUBLIC_ADDRESS
+	}
+}
+
 func validateServerPortField(config *Config) {
 	switch {
 	case config.Server.Port == 0:
@@ -81,7 +90,6 @@ func validateServerPortField(config *Config) {
 		break
 	}
 }
-
 
 func validateCameraNames(config *Config) {
 	for k := range config.Cameras {
