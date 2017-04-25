@@ -92,3 +92,8 @@ cameras :
     url: "http://192.168.1.110:8080/video3.mjpg"
     path: "hallway"
     error_image: "images/no-signal-toc.jpg"
+
+  - name: "Camera 1"
+    url: "http://96.10.1.168/mjpg/1/video.mjpg"
+    path: "cam1"
+    error_image: "images/no-signal-toc.jpg"

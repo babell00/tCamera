@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"github.com/babell00/toc_camera/camera"
 	"image/jpeg"
+	"encoding/json"
 )
-
 
 func StartServer(portNumber int, service *camera.CameraService) {
 	log.Println("Setting up Server")
@@ -56,8 +56,18 @@ func registerHandler(path string, service *camera.CameraService) {
 
 func serverSetup(portNumber int, service *camera.CameraService) {
 	createEndpointsForCameras(service)
+	getReportPage(service)
 
 	formattedPortNumber := formatPortNumber(portNumber)
 	log.Printf("Server is listening on port: %v", portNumber)
 	log.Fatal("Server error: ", http.ListenAndServe(formattedPortNumber, nil))
+}
+
+func getReportPage(service *camera.CameraService) {
+	http.HandleFunc("/report", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+
+		cameras := service.GetAll()
+		json.NewEncoder(w).Encode(&cameras)
+	})
 }

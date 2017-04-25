@@ -25,7 +25,3 @@ func (service *CameraService) GetAll() []Camera {
 func (service *CameraService) Save(camera Camera) {
 	service.repository.Save(camera)
 }
-
-func (service *CameraService) SaveById(id string, camera Camera) {
-	service.repository.SaveById(id, camera)
-}

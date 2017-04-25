@@ -5,9 +5,10 @@ import (
 )
 
 type Camera struct {
-	Id    string
-	Name  string
-	Url   string
-	Path  string
-	Image image.Image
+	Name   string `json:"name"`
+	Id     string `json:"id"`
+	Url    string `json:"url"`
+	Path   string `json:"path"`
+	Image  image.Image `json:"-"`
+	Online bool `json:"online"`
 }

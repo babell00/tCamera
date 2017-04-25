@@ -34,8 +34,10 @@ func setup() {
 	cameraService := camera.InitService(cameras)
 
 	cameras = cameraService.GetAll()
-	camera.UpdateCameras(cameras, cameraService)
-	camera.SetUpdateFunction(config.RefreshInterval, cameraService)
+	camera.Update(cameras, cameraService)
+	camera.SetUpdateCameraFunction(config.RefreshInterval, cameraService)
+
+	camera.SetUpdateStatusFunction(10, cameraService)
 
 	printInfo(config)
 

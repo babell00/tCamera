@@ -3,16 +3,19 @@ package camera
 import (
 	"log"
 	"github.com/twinj/uuid"
+	"sync"
 )
 
 type cameraRepository struct {
 	data map[string]Camera
+	mux *sync.Mutex
 }
 
 func InitRepository(cameras []Camera) *cameraRepository {
 	log.Println("Init Camera Repository")
+	mutex := &sync.Mutex{}
 	cameraMap := make(map[string]Camera)
-	cameraModle := cameraRepository{cameraMap}
+	cameraModle := cameraRepository{cameraMap, mutex}
 	for _, camera := range cameras {
 		camera.Id = uuid.NewV4().String()
 		cameraModle.data[camera.Id] = camera
@@ -45,13 +48,10 @@ func (repository *cameraRepository) FindCameraByPath(path string) Camera {
 }
 
 func (repository *cameraRepository) Save(camera Camera) {
+	repository.mux.Lock()
 	if camera.Id == "" {
 		camera.Id = uuid.NewV4().String()
 	}
 	repository.data[camera.Id] = camera
+	repository.mux.Unlock()
 }
-
-func (repository *cameraRepository) SaveById(id string, camera Camera) {
-	repository.data[id] = camera
-}
-
