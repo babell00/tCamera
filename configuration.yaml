@@ -8,9 +8,9 @@ server :
     port: 8080
 
 cameras :
-  - name: "Camera 1"
-    url: "http://195.67.26.73/mjpg/video.mjpg"
-    path: "cam1"
+  - name: "16 - North West Eight Antiques"
+    url: "http://192.168.0.107:8080/video3.mjpg"
+    path: "north_west_eight_antiques"
     error_image: "images/no-signal-toc.jpg"
 
   - name: "Camera 2"
