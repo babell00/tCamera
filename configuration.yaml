@@ -10,19 +10,85 @@ server :
 cameras :
   - name: "Carpark"
     url: "http://192.168.1.112:8080/video3.mjpg"
+    path: "carpark"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "16 - North West Eight Antiques"
+    url: "http://192.168.1.107:8080/video3.mjpg"
     path: "north_west_eight_antiques"
     error_image: "images/no-signal-toc.jpg"
 
-  - name: "Camera 2"
-    url: "http://96.10.1.168/mjpg/1/video.mjpg"
-    path: "cam2"
+  - name: "31 - Tony Sinclair"
+    url: "http://192.168.1.113:8080/video3.mjpg"
+    path: "tony_sinclair"
     error_image: "images/no-signal-toc.jpg"
 
-  - name:
-    url: "http://plazacam.studentaffairs.duke.edu/mjpg/video.mjpg"
-    path: "cam3"
+  - name: "41 - Antiques By Design"
+    url: "http://192.168.1.115:8080/video3.mjpg"
+    path: "antiques_by_design"
     error_image: "images/no-signal-toc.jpg"
 
-#  - name: "Kamera 4"
-#    url: "http://plaza232323cam.studentaffairs.duke.edu/mjpg/video.mjpg"
-#    path: "cam4"
+  - name: "54 - Carol Fotheringham"
+    url: "http://192.168.1.108:8080/video3.mjpg"
+    path: "carol_fotheringham"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "24 - Gazelles of Lyndhurst"
+    url: "http://192.168.1.106:8080/video3.mjpg"
+    path: "gazelles_of_lyndhurst_2"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "14 - Dappr Aviation"
+    url: "http://192.168.1.102:8080/video3.mjpg"
+    path: "dappr_aviation"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "24 - Gazelles of Lyndhurst"
+    url: "http://192.168.1.101:8080/video3.mjpg"
+    path: "gazelles_of_lyndhurst_1"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "23 - Brian Hawkins"
+    url: "http://192.168.1.103:8080/video3.mjpg"
+    path: "brian_hawkins"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "4 - Gwilym Davies"
+    url: "http://192.168.1.109:8080/video3.mjpg"
+    path: "gwilym_davies"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "9 - Liz Callingham"
+    url: "http://192.168.1.105:8080/video3.mjpg"
+    path: "liz_callingham"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "Ground Floor"
+    url: "http://192.168.1.118:8080/video3.mjpg"
+    path: "ground_floor"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "60 - Ines Cole"
+    url: "http://192.168.1.120:8080/video3.mjpg"
+    path: "ines_cole"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "5 - Martin"
+    url: "http://192.168.1.114:8080/video3.mjpg"
+    path: "martin_1"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "13 - David Edmonds"
+    url: "http://192.168.1.117:8080/video3.mjpg"
+    path: "david_edmonds"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "10 - Omnipod"
+    url: "http://192.168.1.116:8080/video3.mjpg"
+    path: "omnipod"
+    error_image: "images/no-signal-toc.jpg"
+
+  - name: "5 - Hallway"
+    url: "http://192.168.1.110:8080/video3.mjpg"
+    path: "hallway"
+    error_image: "images/no-signal-toc.jpg"
