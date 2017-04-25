@@ -65,6 +65,7 @@ func serverSetup(portNumber int, service *camera.CameraService) {
 
 func getReportPage(service *camera.CameraService) {
 	http.HandleFunc("/report", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Content-Type", "application/json")
 
 		cameras := service.GetAll()
