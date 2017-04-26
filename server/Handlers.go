@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"image/jpeg"
 	"github.com/gorilla/mux"
+	"log"
 )
 
 var _service *camera.CameraService
@@ -17,6 +18,8 @@ func InitHandlers(service *camera.CameraService) {
 }
 
 func CameraIndex(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving", r.URL)
+
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 
@@ -30,11 +33,13 @@ func CameraIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func CameraImage(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving", r.URL)
+
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "image/jpeg")
 
 	vars := mux.Vars(r)
-	path :=vars["camera_path"]
+	path := vars["camera_path"]
 
 	camera := getService().GetByPath(path)
 	if camera.Image == nil {

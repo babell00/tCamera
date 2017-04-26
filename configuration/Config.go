@@ -1,11 +1,5 @@
 package configuration
 
-import (
-	"log"
-)
-
-const FILE_PATH string = "configuration.yaml"
-
 type Config struct {
 	MaxCpu               int `yaml:"max_cpu"`
 	ImageUpdateInterval  uint64 `yaml:"image_update_interval"`
@@ -25,13 +19,4 @@ type Camera struct {
 type Server struct {
 	Port          int `yaml:"port"`
 	PublicAddress string `yaml:"public_address"`
-}
-
-func ReadConfigurationFromYaml() Config {
-	log.Printf("Reading configuration from: %v", FILE_PATH)
-	data := readYamlFile(FILE_PATH)
-	self := unmarshalYaml(data)
-	validate(self)
-
-	return *self
 }
