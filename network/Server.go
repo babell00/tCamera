@@ -7,6 +7,7 @@ import (
 	"github.com/babell00/toc_camera/camera"
 	"image/jpeg"
 	"encoding/json"
+	"sort"
 )
 
 func StartServer(portNumber int, service *camera.CameraService) {
@@ -69,6 +70,11 @@ func getReportPage(service *camera.CameraService) {
 		w.Header().Set("Content-Type", "application/json")
 
 		cameras := service.GetAll()
+
+		sort.Slice(cameras, func(a ,b int) bool {
+			return cameras[a].Name < cameras[b].Name
+		})
+
 		json.NewEncoder(w).Encode(&cameras)
 	})
 }

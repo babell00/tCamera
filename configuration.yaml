@@ -1,13 +1,14 @@
 max_cpu : 4
 
-refresh_interval: 300 #seconds
+image_update_interval: 300 #seconds
+
+status_update_interval: 5 #seconds
 
 default_error_image: "images/no-signal.jpg"
 
-public_address: "217.35.86.6"
-
 server :
     port: 8080
+    public_address: "217.35.86.6"
 
 cameras :
   - name: "Carpark"

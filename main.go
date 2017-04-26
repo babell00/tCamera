@@ -7,6 +7,8 @@ import (
 	"github.com/babell00/toc_camera/camera"
 	"github.com/babell00/toc_camera/network"
 	"os"
+	"github.com/jasonlvhit/gocron"
+	"github.com/babell00/toc_camera/task"
 )
 
 func main() {
@@ -14,7 +16,7 @@ func main() {
 }
 
 func printInfo(config configuration.Config) {
-	log.Printf("Cameras refresh interval: %vmins", config.RefreshInterval)
+	log.Printf("Cameras refresh interval: %vseconds", config.ImageUpdateInterval)
 	log.Printf("Added %v cameras", len(config.Cameras))
 }
 
@@ -30,14 +32,9 @@ func setup() {
 	runtime.GOMAXPROCS(config.MaxCpu)
 
 	cameras := camera.ConvertConfigCameraToCamera(config)
-
 	cameraService := camera.InitService(cameras)
 
-	cameras = cameraService.GetAll()
-	camera.Update(cameras, cameraService)
-	camera.SetUpdateCameraFunction(config.RefreshInterval, cameraService)
-
-	camera.SetUpdateStatusFunction(10, cameraService)
+	registerTasks(config, cameraService)
 
 	printInfo(config)
 
@@ -50,4 +47,17 @@ func setLogger() {
 		log.Printf("Error opening file: %v", err)
 	}
 	log.SetOutput(f)
+}
+
+func registerTasks(config configuration.Config, service *camera.CameraService){
+
+	imageUpdate := gocron.NewScheduler()
+	imageUpdate.Every(config.ImageUpdateInterval).Seconds().Do(task.UpdateImage, service)
+	imageUpdate.Start()
+
+	statusUpdate := gocron.NewScheduler()
+	statusUpdate.Every(config.StatusUpdateInterval).Seconds().Do(task.UpdateStatus, service)
+	statusUpdate.Start()
+
+
 }

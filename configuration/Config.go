@@ -10,14 +10,15 @@ import (
 
 const FILE_PATH string = "configuration.yaml"
 const DEFAULT_PORT_NUMBER int = 8080
-const DEFAULT_REFRESH_INTERVAL int = 10
+const DEFAULT_IMAGE_UPDATE_INTERVAL uint64 = 10
+const DEFAULT_STATUS_UPDATE_INTERVAL uint64 = 5
 const DEFAULT_ERROR_IMAGE string = "image/no-signal.jpg"
 const DEFAULT_PUBLIC_ADDRESS = "localhost"
 
 type Config struct {
 	MaxCpu            int `yaml:"max_cpu"`
-	RefreshInterval   int `yaml:"refresh_interval"`
-	PublicAddress     string `yaml:"public_address"`
+	ImageUpdateInterval   uint64 `yaml:"image_update_interval"`
+	StatusUpdateInterval   uint64 `yaml:"status_update_interval"`
 	DefaultErrorImage string `yaml:"default_error_image"`
 	Server            Server `yaml:"server"`
 	Cameras           []Camera `yaml:"cameras"`
@@ -32,6 +33,7 @@ type Camera struct {
 
 type Server struct {
 	Port int `yaml:"port"`
+	PublicAddress     string `yaml:"public_address"`
 }
 
 func ReadConfigurationFromYaml() Config {
@@ -46,8 +48,9 @@ func ReadConfigurationFromYaml() Config {
 func validate(config *Config) {
 	log.Println("Configuration validation")
 	validateCpuField(config)
-	validateRefreshIntervalField(config)
-	validatePublicAddress(config)
+	validateImageUpdateIntervalField(config)
+	validateStatusUpdateIntervalField(config)
+	validateServerPublicAddress(config)
 	validateServerPortField(config)
 	validateDefaultErrorImage(config)
 	validateCameraNames(config)
@@ -65,15 +68,21 @@ func validateCpuField(config *Config) {
 	}
 }
 
-func validateRefreshIntervalField(config *Config) {
-	if config.RefreshInterval == 0 {
-		config.RefreshInterval = DEFAULT_REFRESH_INTERVAL
+func validateImageUpdateIntervalField(config *Config) {
+	if config.ImageUpdateInterval == 0 {
+		config.ImageUpdateInterval = DEFAULT_IMAGE_UPDATE_INTERVAL
 	}
 }
 
-func validatePublicAddress(config *Config){
-	if config.PublicAddress == "" {
-		config.PublicAddress = DEFAULT_PUBLIC_ADDRESS
+func validateStatusUpdateIntervalField(config *Config) {
+	if config.ImageUpdateInterval == 0 {
+		config.StatusUpdateInterval = DEFAULT_STATUS_UPDATE_INTERVAL
+	}
+}
+
+func validateServerPublicAddress(config *Config){
+	if config.Server.PublicAddress == "" {
+		config.Server.PublicAddress = DEFAULT_PUBLIC_ADDRESS
 	}
 }
 

@@ -12,7 +12,7 @@ func ConvertConfigCameraToCamera(config configuration.Config) []Camera {
 	var cameras []Camera
 	for _, v := range config.Cameras {
 		img := openImage(v.ErrorImage, config)
-		publicUrl := buildPublicUrl(config.PublicAddress, v.Path)
+		publicUrl := buildPublicUrl(config.Server.PublicAddress, v.Path)
 		c := Camera{Name: v.Name, Url: v.Url, Path: v.Path, PublicUrl: publicUrl, Image: img}
 		cameras = append(cameras, c)
 	}
