@@ -59,5 +59,4 @@ func registerTasks(config configuration.Config, service *camera.CameraService){
 	statusUpdate.Every(config.StatusUpdateInterval).Seconds().Do(task.UpdateStatus, service)
 	statusUpdate.Start()
 
-
 }
