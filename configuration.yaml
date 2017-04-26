@@ -1,4 +1,4 @@
-max_cpu : 4
+max_cpu : 8
 
 image_update_interval: 300 #seconds
 

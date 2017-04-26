@@ -6,14 +6,23 @@ import (
 )
 
 func ReadJpeg(url string) (image.Image, error) {
-	data, err := mjpeg.NewDecoderFromURL(url)
+	decoder, err := mjpeg.NewDecoderFromURL(url)
 	if err != nil {
 		return nil, err
 	}
 
-	img, err := data.Decode()
+	img, err := decoder.Decode()
 	if err != nil {
 		return nil, err
 	}
 	return img, nil
+}
+
+func Decoder(url string) (*mjpeg.Decoder, error)  {
+	decoder, err := mjpeg.NewDecoderFromURL(url)
+	if err != nil {
+		return nil, err
+	}
+	return decoder, err
+
 }

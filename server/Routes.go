@@ -18,6 +18,7 @@ var routes = Routes{
 	Route{"Cameras", "/cameras", "GET", CameraIndex},
 	Route{"Report", "/report", "GET", CameraIndex},
 	Route{"CameraImage", "/image/{camera_path}", "GET", CameraImage},
+	Route{"CameraStream", "/stream/{camera_path}", "GET", CameraStream},
 }
 
 func NewRouter() *mux.Router {
