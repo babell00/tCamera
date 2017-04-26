@@ -16,20 +16,30 @@ func UpdateStatus(service *camera.CameraService) {
 }
 
 func updateCameraStatus(cam camera.Camera, service *camera.CameraService) {
-	timeout := time.Duration(10 * time.Second)
-	client := &http.Client{Timeout: timeout, }
-	req, _ := http.NewRequest("GET", cam.MJpegUrl, nil)
-
-	resp, err := client.Do(req)
+	resp, err := request(cam.MJpegUrl)
 	if err != nil {
 		cam.Online = false
 		service.Save(cam)
 		log.Printf("Camera is not responding: %v", cam)
 		return
 	}
+
 	if resp.Status == "200 OK" {
 		cam.Online = true
 		service.Save(cam)
+		return
+	} else {
+		cam.Online = false
+		service.Save(cam)
+		return
 	}
 }
 
+
+func request(url string) (*http.Response, error) {
+	timeout := time.Duration(10 * time.Second)
+	client := &http.Client{Timeout: timeout, }
+	req, _ := http.NewRequest("GET", url, nil)
+
+	return client.Do(req)
+}

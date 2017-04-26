@@ -96,7 +96,13 @@ cameras :
     url_path: "hallway"
     error_image: "images/no-signal-toc.jpg"
 
-  - name: "TEST TEST"
+  - name: "TEST 2"
+    mjpeg_url: "http://96.10.1.168/mjpg/1/video.mjpg"
+    url_path: "test2"
+    error_image: "images/no-signal.jpg"
+
+
+  - name: "TEST 1"
     mjpeg_url: "http://plazacam.studentaffairs.duke.edu/mjpg/video.mjpg"
-    url_path: "test"
-    error_image: "images/no-signal-toc.jpg"
+    url_path: "test1"
+    error_image: "images/no-signal.jpg"
