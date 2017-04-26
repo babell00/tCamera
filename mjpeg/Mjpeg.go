@@ -12,14 +12,14 @@ import (
 )
 
 type Decoder struct {
-	r *multipart.Reader
-	m sync.Mutex
+	reader *multipart.Reader
+	mux sync.Mutex
 }
 
-func NewDecoder(r io.Reader, b string) *Decoder {
-	d := new(Decoder)
-	d.r = multipart.NewReader(r, b)
-	return d
+func NewDecoder(reader io.Reader, boundary string) *Decoder {
+	decoder := new(Decoder)
+	decoder.reader = multipart.NewReader(reader, boundary)
+	return decoder
 }
 
 func NewDecoderFromResponse(res *http.Response) (*Decoder, error) {
@@ -30,8 +30,8 @@ func NewDecoderFromResponse(res *http.Response) (*Decoder, error) {
 	return NewDecoder(res.Body, strings.Trim(param["boundary"], "-")), nil
 }
 
-func NewDecoderFromURL(u string) (*Decoder, error) {
-	req, err := http.NewRequest("GET", u, nil)
+func NewDecoderFromURL(url string) (*Decoder, error) {
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43,9 +43,9 @@ func NewDecoderFromURL(u string) (*Decoder, error) {
 }
 
 func (d *Decoder) Decode() (image.Image, error) {
-	p, err := d.r.NextPart()
+	part, err := d.reader.NextPart()
 	if err != nil {
 		return nil, err
 	}
-	return jpeg.Decode(p)
+	return jpeg.Decode(part)
 }

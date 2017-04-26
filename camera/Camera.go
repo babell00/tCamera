@@ -7,9 +7,9 @@ import (
 type Camera struct {
 	Name   string `json:"name"`
 	Id     string `json:"id"`
-	Url    string `json:"url"`
+	MJpegUrl    string `json:"mjpeg_url"`
 	PublicUrl string `json:"public_url"`
-	Path   string `json:"path"`
+	UrlPath   string `json:"url_path"`
 	Image  image.Image `json:"-"`
 	Online bool `json:"online"`
 }

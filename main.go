@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"log"
 	"github.com/babell00/toc_camera/camera"
-	"github.com/babell00/toc_camera/network"
+	"github.com/babell00/toc_camera/server"
 	"os"
 	"github.com/jasonlvhit/gocron"
 	"github.com/babell00/toc_camera/task"
@@ -38,7 +38,7 @@ func setup() {
 
 	printInfo(config)
 
-	network.StartServer(config.Server.Port, cameraService)
+	server.NewServer(config.Server.Port, cameraService)
 }
 
 func setLogger() {
@@ -50,6 +50,7 @@ func setLogger() {
 }
 
 func registerTasks(config configuration.Config, service *camera.CameraService){
+	task.UpdateImage(service)
 
 	imageUpdate := gocron.NewScheduler()
 	imageUpdate.Every(config.ImageUpdateInterval).Seconds().Do(task.UpdateImage, service)

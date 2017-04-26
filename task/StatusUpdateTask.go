@@ -18,7 +18,7 @@ func UpdateStatus(service *camera.CameraService) {
 func updateCameraStatus(cam camera.Camera, service *camera.CameraService) {
 	timeout := time.Duration(10 * time.Second)
 	client := &http.Client{Timeout: timeout, }
-	req, _ := http.NewRequest("GET", cam.Url, nil)
+	req, _ := http.NewRequest("GET", cam.MJpegUrl, nil)
 
 	resp, err := client.Do(req)
 	if err != nil {

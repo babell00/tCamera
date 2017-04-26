@@ -44,7 +44,7 @@ func (repository *cameraRepository) FindById(id string) Camera {
 func (repository *cameraRepository) FindCameraByPath(path string) Camera {
 	var camera Camera
 	for _, c := range repository.data {
-		if c.Path == path {
+		if c.UrlPath == path {
 			camera = c
 		}
 	}

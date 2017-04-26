@@ -10,12 +10,14 @@ func UpdateImage(service *camera.CameraService) {
 	log.Println("Updating camers images")
 	cameras := service.GetAll()
 	for _, cam := range cameras {
-		go updateCamera(cam, service)
+		if cam.UrlPath == "test" {
+			go updateCamera(cam, service)
+		}
 	}
 }
 
 func updateCamera(cam camera.Camera, service *camera.CameraService) {
-	img, err := camera.ReadJpeg(cam.Url)
+	img, err := camera.ReadJpeg(cam.MJpegUrl)
 	if err != nil {
 		log.Printf("Cannot read camera stream : %#v", cam)
 		return
