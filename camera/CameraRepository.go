@@ -24,16 +24,7 @@ func Repository() *cameraRepository {
 	return repository
 }
 
-func (repository *cameraRepository) AddItems(cameras []Camera) {
-	repository.mux.Lock()
-	defer  repository.mux.Unlock()
 
-	for _, camera := range cameras {
-		camera.Id = uuid.NewV4().String()
-		repository.items[camera.Id] = camera
-	}
-
-}
 
 
 func (repository *cameraRepository) FindAll() []Camera {
@@ -77,4 +68,11 @@ func (repository *cameraRepository) Save(camera Camera) {
 		camera.Id = uuid.NewV4().String()
 	}
 	repository.items[camera.Id] = camera
+}
+
+func (repository *cameraRepository) SaveItems(cameras []Camera) {
+	for _, camera := range cameras {
+		repository.Save(camera)
+	}
+
 }

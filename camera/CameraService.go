@@ -21,7 +21,7 @@ func Service() *CameraService {
 
 
 func (service *CameraService) AddCameras(cameras []Camera){
-	service.repository.AddItems(cameras)
+	service.repository.SaveItems(cameras)
 }
 
 func (service *CameraService) GetById(id string) Camera {
