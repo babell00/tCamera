@@ -47,7 +47,7 @@ func (repository *cameraRepository) FindById(id string) Camera {
 	return repository.items[id]
 }
 
-func (repository *cameraRepository) FindCameraByPath(path string) Camera {
+func (repository *cameraRepository) FindByPath(path string) Camera {
 	repository.mux.RLock()
 	defer repository.mux.RUnlock()
 

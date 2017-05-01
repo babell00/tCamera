@@ -29,7 +29,7 @@ func (service *CameraService) GetById(id string) Camera {
 }
 
 func (service *CameraService) GetByPath(path string) Camera {
-	return service.repository.FindCameraByPath(path)
+	return service.repository.FindByPath(path)
 }
 
 func (service *CameraService) GetAll() []Camera {
