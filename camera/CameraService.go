@@ -1,13 +1,27 @@
 package camera
 
+import "sync"
+
+var (
+	service *CameraService
+	serviceOnce    sync.Once
+)
+
 type CameraService struct {
 	repository *cameraRepository
 }
 
-func InitService(cameras []Camera) *CameraService {
-	cameraModle := InitRepository(cameras)
-	cameraService := CameraService{cameraModle}
-	return &cameraService
+func Service() *CameraService {
+	serviceOnce.Do(func() {
+		cameraRepository := Repository()
+		service = &CameraService{cameraRepository}
+	})
+	return service
+}
+
+
+func (service *CameraService) AddCameras(cameras []Camera){
+	service.repository.AddItems(cameras)
 }
 
 func (service *CameraService) GetById(id string) Camera {

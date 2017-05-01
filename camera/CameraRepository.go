@@ -1,60 +1,80 @@
 package camera
 
 import (
-	"log"
 	"github.com/twinj/uuid"
 	"sync"
+	"log"
+)
+
+var (
+	repository *cameraRepository
+	repositoryOnce       sync.Once
 )
 
 type cameraRepository struct {
-	data map[string]Camera
-	mux  *sync.Mutex
+	items map[string]Camera
+	mux   sync.RWMutex
 }
 
-func InitRepository(cameras []Camera) *cameraRepository {
+func Repository() *cameraRepository {
 	log.Println("Init Camera Repository")
-	mutex := &sync.Mutex{}
-	data := make(map[string]Camera)
-	cameraRepository := cameraRepository{data, mutex}
-	cameraRepository.mux.Lock()
+	repositoryOnce.Do(func() {
+		repository = &cameraRepository{items: make(map[string]Camera)}
+	})
+	return repository
+}
+
+func (repository *cameraRepository) AddItems(cameras []Camera) {
+	repository.mux.Lock()
+	defer  repository.mux.Unlock()
+
 	for _, camera := range cameras {
 		camera.Id = uuid.NewV4().String()
-		cameraRepository.data[camera.Id] = camera
+		repository.items[camera.Id] = camera
 	}
-	cameraRepository.mux.Unlock()
-	return &cameraRepository
 
 }
 
-func (repository cameraRepository) FindAll() []Camera {
-	cameraList := make([]Camera, 0, len(repository.data))
-	repository.mux.Lock()
-	for _, value := range repository.data {
+
+func (repository *cameraRepository) FindAll() []Camera {
+	repository.mux.RLock()
+	defer repository.mux.RUnlock()
+
+	cameraList := make([]Camera, 0, len(repository.items))
+	for _, value := range repository.items {
 
 		cameraList = append(cameraList, value)
 	}
-	repository.mux.Unlock()
+
 	return cameraList
 }
 
-func (repository cameraRepository) FindById(id string) Camera {
-	return repository.data[id]
+func (repository *cameraRepository) FindById(id string) Camera {
+	repository.mux.RLock()
+	defer repository.mux.RUnlock()
+
+	return repository.items[id]
 }
 
-func (repository cameraRepository) FindCameraByPath(path string) Camera {
-	for _, c := range repository.data {
+func (repository *cameraRepository) FindCameraByPath(path string) Camera {
+	repository.mux.RLock()
+	defer repository.mux.RUnlock()
+
+	for _, c := range repository.items {
 		if c.UrlPath == path {
 			return c
 		}
 	}
+
 	return Camera{}
 }
 
 func (repository *cameraRepository) Save(camera Camera) {
 	repository.mux.Lock()
+	defer repository.mux.Unlock()
+
 	if camera.Id == "" {
 		camera.Id = uuid.NewV4().String()
 	}
-	repository.data[camera.Id] = camera
-	repository.mux.Unlock()
+	repository.items[camera.Id] = camera
 }

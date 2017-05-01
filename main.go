@@ -11,8 +11,8 @@ import (
 	"github.com/babell00/toc_camera/task"
 )
 
-func main() {
 
+func main() {
 	setup()
 }
 
@@ -33,11 +33,14 @@ func setup() {
 	runtime.GOMAXPROCS(config.MaxCpu)
 
 	cameras := camera.ConvertConfigCameraToCamera(config)
-	cameraService := camera.InitService(cameras)
+
+	cameraService := camera.Service()
+	cameraService.AddCameras(cameras)
 
 	registerTasks(config, cameraService)
 
 	printInfo(config)
+
 
 	server.NewServer(config.Server.Port, cameraService)
 }
