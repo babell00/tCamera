@@ -26,7 +26,7 @@ func InitRepository(cameras []Camera) *cameraRepository {
 
 }
 
-func (repository *cameraRepository) FindAll() []Camera {
+func (repository cameraRepository) FindAll() []Camera {
 	cameraList := make([]Camera, 0, len(repository.data))
 	repository.mux.Lock()
 	for _, value := range repository.data {
@@ -37,19 +37,17 @@ func (repository *cameraRepository) FindAll() []Camera {
 	return cameraList
 }
 
-func (repository *cameraRepository) FindById(id string) Camera {
+func (repository cameraRepository) FindById(id string) Camera {
 	return repository.data[id]
 }
 
-func (repository *cameraRepository) FindCameraByPath(path string) Camera {
-	var camera Camera
+func (repository cameraRepository) FindCameraByPath(path string) Camera {
 	for _, c := range repository.data {
 		if c.UrlPath == path {
-			camera = c
+			return c
 		}
 	}
-
-	return camera
+	return Camera{}
 }
 
 func (repository *cameraRepository) Save(camera Camera) {

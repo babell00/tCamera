@@ -39,7 +39,7 @@ func CameraIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func CameraImage(w http.ResponseWriter, r *http.Request) {
-	log.Println("Serving", r.URL)
+	//log.Println("Serving", r.URL)
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "image/jpeg")
@@ -48,13 +48,14 @@ func CameraImage(w http.ResponseWriter, r *http.Request) {
 	path := vars["camera_path"]
 
 	camera := getService().GetByPath(path)
+
 	if camera.Image == nil {
 		return
 	}
 
 	err := jpeg.Encode(w, camera.Image, nil)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Println(err)
 	}
 }
 
