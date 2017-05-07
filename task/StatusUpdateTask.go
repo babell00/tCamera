@@ -32,7 +32,6 @@ func updateCameraStatus(cam camera.Camera, service *camera.CameraService) {
 	service.Save(cam)
 }
 
-
 func request(url string) (*http.Response, error) {
 	timeout := time.Duration(10 * time.Second)
 	client := &http.Client{Timeout: timeout, }
