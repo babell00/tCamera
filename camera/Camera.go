@@ -14,6 +14,7 @@ type Camera struct {
 	UrlPath   string `json:"url_path"`
 	Image  image.Image `json:"-"`
 	Online bool `json:"online"`
+	LastOnline time.Time `json:"last_online, string"`
 	LastUpdate time.Time `json:"last_update, string"`
 }
 

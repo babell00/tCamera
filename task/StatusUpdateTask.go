@@ -26,6 +26,7 @@ func updateCameraStatus(cam camera.Camera, service *camera.CameraService) {
 
 	if resp.Status == "200 OK" {
 		cam.Online = true
+		cam.LastOnline = time.Now()
 	} else {
 		cam.Online = false
 	}
