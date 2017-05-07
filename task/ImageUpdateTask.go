@@ -3,6 +3,7 @@ package task
 import (
 	"log"
 	"github.com/babell00/toc_camera/camera"
+	"time"
 )
 
 func UpdateImage(service *camera.CameraService) {
@@ -15,8 +16,10 @@ func UpdateImage(service *camera.CameraService) {
 
 func updateCamera(cam camera.Camera, service *camera.CameraService) {
 	img, err := camera.ReadJpeg(cam.MJpegUrl)
+	cam.LastUpdate = time.Now()
 	if err != nil {
 		log.Printf("Cannot read camera stream : %#v", cam)
+		service.Save(cam)
 		return
 	}
 

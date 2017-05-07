@@ -2,6 +2,7 @@ package camera
 
 import (
 	"image"
+	"time"
 )
 
 type Camera struct {
@@ -13,4 +14,6 @@ type Camera struct {
 	UrlPath   string `json:"url_path"`
 	Image  image.Image `json:"-"`
 	Online bool `json:"online"`
+	LastUpdate time.Time `json:"last_update, string"`
 }
+
