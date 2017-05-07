@@ -26,13 +26,10 @@ func updateCameraStatus(cam camera.Camera, service *camera.CameraService) {
 
 	if resp.Status == "200 OK" {
 		cam.Online = true
-		service.Save(cam)
-		return
 	} else {
 		cam.Online = false
-		service.Save(cam)
-		return
 	}
+	service.Save(cam)
 }
 
 
