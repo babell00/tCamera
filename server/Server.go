@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"fmt"
-	"github.com/babell00/toc_camera/camera"
+	"github.com/babell00/tCamera/camera"
 	"github.com/gorilla/mux"
 )
 

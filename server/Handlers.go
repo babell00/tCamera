@@ -2,7 +2,7 @@ package server
 
 import (
 	"net/http"
-	"github.com/babell00/toc_camera/camera"
+	"github.com/babell00/tCamera/camera"
 	"sort"
 	"encoding/json"
 	"image/jpeg"

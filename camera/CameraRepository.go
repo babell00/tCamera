@@ -1,14 +1,15 @@
 package camera
 
 import (
-	"github.com/twinj/uuid"
-	"sync"
 	"log"
+	"sync"
+
+	"github.com/twinj/uuid"
 )
 
 var (
-	repository *cameraRepository
-	repositoryOnce       sync.Once
+	repository     *cameraRepository
+	repositoryOnce sync.Once
 )
 
 type cameraRepository struct {
@@ -23,9 +24,6 @@ func Repository() *cameraRepository {
 	})
 	return repository
 }
-
-
-
 
 func (repository *cameraRepository) FindAll() []Camera {
 	repository.mux.RLock()

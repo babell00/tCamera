@@ -2,7 +2,7 @@ package camera
 
 import (
 	"image"
-	"github.com/babell00/toc_camera/mjpeg"
+	"github.com/babell00/tCamera/mjpeg"
 )
 
 func ReadJpeg(url string) (image.Image, error) {

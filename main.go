@@ -1,19 +1,20 @@
 package main
 
 import (
-	"github.com/babell00/toc_camera/configuration"
-	"runtime"
 	"log"
-	"github.com/babell00/toc_camera/camera"
-	"github.com/babell00/toc_camera/server"
 	"os"
-	"github.com/jasonlvhit/gocron"
-	"github.com/babell00/toc_camera/task"
-)
+	"runtime"
 
+	"github.com/babell00/tCamera/camera"
+	"github.com/babell00/tCamera/configuration"
+	"github.com/babell00/tCamera/server"
+	"github.com/babell00/tCamera/task"
+	"github.com/jasonlvhit/gocron"
+)
 
 func main() {
 	setup()
+	log.Println("Hello")
 }
 
 func printInfo(config configuration.Config) {
@@ -41,7 +42,6 @@ func setup() {
 
 	printInfo(config)
 
-
 	server.NewServer(config.Server.Port, cameraService)
 }
 
@@ -53,7 +53,7 @@ func setLogger() {
 	log.SetOutput(f)
 }
 
-func registerTasks(config configuration.Config, service *camera.CameraService){
+func registerTasks(config configuration.Config, service *camera.CameraService) {
 	task.UpdateImage(service)
 
 	imageUpdate := gocron.NewScheduler()

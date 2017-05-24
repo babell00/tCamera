@@ -2,7 +2,7 @@ package task
 
 import (
 	"log"
-	"github.com/babell00/toc_camera/camera"
+	"github.com/babell00/tCamera/camera"
 	"time"
 )
 

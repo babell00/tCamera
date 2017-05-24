@@ -4,7 +4,7 @@ import (
 	"time"
 	"net/http"
 	"log"
-	"github.com/babell00/toc_camera/camera"
+	"github.com/babell00/tCamera/camera"
 )
 
 func UpdateStatus(service *camera.CameraService) {

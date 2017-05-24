@@ -5,7 +5,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"log"
 	"runtime"
-	"github.com/babell00/toc_camera/marvel"
+	"github.com/babell00/tCamera/marvel"
 )
 
 const DEFAULT_PORT_NUMBER int = 8080

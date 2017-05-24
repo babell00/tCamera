@@ -1,11 +1,12 @@
 package camera
 
 import (
-	"github.com/babell00/toc_camera/configuration"
-	"image"
-	"os"
-	"log"
 	"fmt"
+	"image"
+	"log"
+	"os"
+
+	"github.com/babell00/tCamera/configuration"
 )
 
 func ConvertConfigCameraToCamera(config configuration.Config) []Camera {
