@@ -3,8 +3,8 @@ package camera
 import "sync"
 
 var (
-	service *CameraService
-	serviceOnce    sync.Once
+	service     *CameraService
+	serviceOnce sync.Once
 )
 
 type CameraService struct {
@@ -19,8 +19,7 @@ func Service() *CameraService {
 	return service
 }
 
-
-func (service *CameraService) AddCameras(cameras []Camera){
+func (service *CameraService) AddCameras(cameras []Camera) {
 	service.repository.SaveItems(cameras)
 }
 
